@@ -10,6 +10,8 @@ This a practice repo is for the following topics:
 
 All the instructions below were created during the inital setup using the Vue CLI. They are useful so I have left them here.
 
+----------------------------------------------------------------------------------------------------------------------------------
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
