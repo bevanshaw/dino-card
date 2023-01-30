@@ -1,5 +1,15 @@
 # dino-card
 
+This a practice repo is for the following topics:
+- Vue 3 with composition API
+- mocking an API from the front-end
+- front end unit testing with Vitest
+- Vuetify for components and CSS
+- client side validation (VeeValidate and Yup)
+- and Pinia for state management
+
+All the instructions below were created during the inital setup using the Vue CLI. They are useful so I have left them here.
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
