@@ -12,7 +12,7 @@ All the instructions below were created during the inital setup using the Vue CL
 
 ----------------------------------------------------------------------------------------------------------------------------------
 
-This template should help get you started developing with Vue 3 in Vite.
+This information should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
 
