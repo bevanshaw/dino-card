@@ -23,7 +23,7 @@ const navItems = [
 
 <template>
   <v-app>
-    <v-app-bar :elevation="2" color="primary" rounded prominent>
+    <v-app-bar :elevation="2" color="secondary" rounded prominent>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer">
         <v-icon icon="mdi-menu" />
       </v-app-bar-nav-icon>
@@ -33,7 +33,7 @@ const navItems = [
       <v-list
         class="ml-lg-n2 ml-md-n2 ml-sm-n2 ml-n2"
         :items="navItems"
-        activeColor="purple-darken-2"
+        activeColor="secondary"
       ></v-list>
     </v-navigation-drawer>
     <v-main>

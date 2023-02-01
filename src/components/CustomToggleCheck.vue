@@ -27,7 +27,7 @@ const setToFalse = () => {
 </script>
 
 <template>
-  <div class="custom-toggle mb-lg-11 mb-md-11 mb-sm-11 mb-8">
+  <div class="custom-toggle mb-lg-11 mb-md-11 mb-sm-11 mb-8 mx-12">
     <h3 class="mb-8 text-h56">
       {{ heading }}
     </h3>

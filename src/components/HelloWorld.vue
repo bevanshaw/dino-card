@@ -1,4 +1,4 @@
-<!-- Leave for testing purposes later as example -->
+<!-- Leave for testing purposes later as example for Vitest-->
 <script setup lang="ts">
 defineProps<{
   msg: string;

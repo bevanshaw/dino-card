@@ -16,7 +16,7 @@ const emailRules = ref([
 </script>
 
 <template>
-  <v-card class="bg-secondary">
+  <v-card class="mb-8 bg-secondary">
     <v-form v-model="validCSC">
       <v-container>
         <v-row>
