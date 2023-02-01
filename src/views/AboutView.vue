@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="my-8">About</h1>
+    <h3 class="text-h3 my-8">About</h3>
     <p>This website was created for practicing the following topics:</p>
     <ul class="ma-8">
       <li>Vue 3 with composition API</li>

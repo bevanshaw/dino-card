@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { RouterView } from "vue-router";
-const drawer = ref(false);
+
+const drawer = ref(true);
 const navItems = [
   {
     title: "Homepage",
     props: {
-      prependIcon: "mdi-chevron-right",
+      prependIcon: "mdi-home",
       to: "/",
     },
   },
@@ -22,17 +23,17 @@ const navItems = [
 
 <template>
   <v-app>
-    <v-app-bar :elevation="2" rounded color="primary" prominent>
-      <v-app-bar-nav-icon variant="text" @click.stop="drawer = !drawer"
-        ><v-icon icon="mdi:mdi-home"
-      /></v-app-bar-nav-icon>
+    <v-app-bar :elevation="2" color="primary" rounded prominent>
+      <v-app-bar-nav-icon @click.stop="drawer = !drawer">
+        <v-icon icon="mdi-menu" />
+      </v-app-bar-nav-icon>
       <v-app-bar-title>Dino Card</v-app-bar-title>
     </v-app-bar>
-    <v-navigation-drawer>
+    <v-navigation-drawer v-model="drawer">
       <v-list
         class="ml-lg-n2 ml-md-n2 ml-sm-n2 ml-n2"
-        bg-color="accentPurple"
         :items="navItems"
+        activeColor="purple-darken-2"
       ></v-list>
     </v-navigation-drawer>
     <v-main>
