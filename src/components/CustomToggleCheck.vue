@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from "vue";
+import { useCommunityServicesCardStore } from "@/stores/communityServicesCard";
+import { ref } from "vue";
 const props = defineProps({
   heading: {
     type: String,
@@ -9,60 +10,44 @@ const props = defineProps({
   },
 });
 
-const emit = defineEmits(["update:modelValue"]);
-const value = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit("update:modelValue", value);
-  },
-});
+const cscStore = useCommunityServicesCardStore();
+const activeButtonClass = ref("");
+
 const setToTrue = () => {
-  value.value = "true";
+  if (props.modelValue === "isCommunityServicesCard") {
+    cscStore.hasCommunityServicesCard = "true";
+    activeButtonClass.value = "true";
+  }
 };
 const setToFalse = () => {
-  value.value = "false";
+  if (props.modelValue === "isCommunityServicesCard") {
+    cscStore.hasCommunityServicesCard = "false";
+    activeButtonClass.value = "false";
+  }
 };
 </script>
 
 <template>
-  <div class="custom-toggle mb-lg-11 mb-md-11 mb-sm-11 mb-8 mx-12">
-    <h3 class="mb-8 text-h56">
-      {{ heading }}
-    </h3>
-    <v-row no-gutters>
+  <v-card :title="props.heading" color="action" class="mb-8 pa-8">
+    <v-card-actions>
       <v-btn
+        @click="setToTrue()"
+        elevation="2"
         :class="{
-          'flex-lg-grow-0 flex-md-grow-0 flex-sm-grow-0 flex-grow-1 mr-lg-5 mr-md-5 mr-sm-5 mr-4 custom-toggle__button-container custom-toggle__button-container--inactive': true,
-          'bg-accentGreen': value === 'true',
+          'bg-success': activeButtonClass === 'true',
         }"
-        @click="setToTrue"
+        >Yes</v-btn
       >
-        <div class="custom-toggle__button-content">Yes</div>
-      </v-btn>
       <v-btn
+        @click="setToFalse()"
+        elevation="2"
         :class="{
-          'flex-lg-grow-0 flex-md-grow-0 flex-sm-grow-0 flex-grow-1 custom-toggle__button-container custom-toggle__button-container--inactive': true,
-          'bg-purple-darken-2': value === 'false',
+          'bg-warning': activeButtonClass === 'false',
         }"
-        @click="setToFalse"
+        >No</v-btn
       >
-        <div class="custom-toggle__button-content">No</div>
-      </v-btn>
-    </v-row>
-  </div>
+    </v-card-actions>
+  </v-card>
 </template>
 
-<style scoped lang="scss">
-.custom-toggle {
-  &__button-container {
-    &--inactive {
-      border: 1px solid #4fbfa5;
-    }
-  }
-  &__button-content {
-    width: fit-content;
-  }
-}
-</style>
+<style scoped lang="scss"></style>

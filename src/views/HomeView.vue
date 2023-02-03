@@ -3,6 +3,11 @@ import CustomToggleCheck from "@/components/CustomToggleCheck.vue";
 import CommunityServicesCardForm from "@/components/CommunityServicesCardForm.vue";
 import DinoCardForm from "@/components/DinoCardForm.vue";
 import DinoCardRegisterForm from "@/components/DinoCardRegisterForm.vue";
+import { useCommunityServicesCardStore } from "@/stores/communityServicesCard";
+
+const cscStore = useCommunityServicesCardStore();
+const isCommunityServicesCard = "isCommunityServicesCard";
+
 </script>
 
 <template>
@@ -14,9 +19,10 @@ import DinoCardRegisterForm from "@/components/DinoCardRegisterForm.vue";
     class="mb-8 pa-8"
     rounded="0"
   />
-  <CustomToggleCheck heading="Do you have a Community Services Card?" />
-  <CommunityServicesCardForm />
+  <CustomToggleCheck heading="Do you have a Community Services Card?" :modelValue="isCommunityServicesCard"/>
+  <CommunityServicesCardForm v-show="cscStore.hasCommunityServicesCard === 'true'" />
   <v-card
+    v-show="cscStore.hasCommunityServicesCard === 'false'"
     title="You are not eligible for a Dino Card!"
     text="Dino Card is only available to community service cardholders."
     variant="tonal"
