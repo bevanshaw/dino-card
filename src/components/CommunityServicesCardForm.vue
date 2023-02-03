@@ -3,9 +3,7 @@ import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { Field, Form } from "vee-validate";
 import { string, object } from "yup";
-import { ref } from "vue";
 
-const cscDateOfBirth = ref("");
 const cscValidationSchema = object().shape({
   cscClientNumber: string()
     .required("Community Services Card number is required")
@@ -75,7 +73,6 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
                 id="cscDateOfBirth"
                 class="mb-2"
                 v-bind="field"
-                v-model="cscDateOfBirth"
                 auto-apply
                 :enable-time-picker="false"
                 required
