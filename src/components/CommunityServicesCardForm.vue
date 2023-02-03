@@ -91,9 +91,7 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
               type="submit"
               variant="outlined"
               :disabled="!(meta.valid && meta.dirty)"
-              :class="
-                !(meta.valid && meta.dirty) ? 'bg-warning' : 'bg-success'
-              "
+              :class="!(meta.valid && meta.dirty) ? 'bg-warning' : 'bg-success'"
             >
               <v-icon class="mr-2">mdi-check</v-icon>Submit
             </v-btn>
