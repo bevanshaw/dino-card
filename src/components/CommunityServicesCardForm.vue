@@ -1,8 +1,15 @@
 <script setup lang="ts">
+import { ref } from "vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { Field, Form } from "vee-validate";
 import { string, object } from "yup";
+import { useCommunityServicesCardStore } from "@/stores/communityServicesCard";
+
+const communityServicesCardStore = useCommunityServicesCardStore();
+
+const cscDateOfBirth = ref("");
+
 
 const cscValidationSchema = object().shape({
   cscClientNumber: string()
@@ -17,25 +24,6 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
   if (values === null || values === undefined) {
     return console.log("Please check all values have been entered correctly");
   }
-  // userCscDateOfBirthFormatted.value = values.cscDateOfBirth;
-
-  // const userValues = {
-  //   clientNumber: values.cscClientNumber,
-  //   dateOfBirth: userCscDateOfBirthFormatted.value,
-  // } as any;
-
-  // isCscButtonLoading.value = true;
-  // const response = await validateCSC(userValues);
-  // isCscButtonLoading.value = false;
-  // if (!response) {
-  //   isCscValid.value = "";
-  //   cscExpiryDate.value = "";
-  //   validationAPIFailure.value = true;
-  // } else {
-  //   isCscValid.value = response.communityServicesCardValid;
-  //   cscExpiryDate.value = response.expiryDate;
-  //   validationAPIFailure.value = false;
-  // }
 };
 </script>
 
@@ -56,31 +44,48 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
           <v-col cols="12">
             <Field name="cscClientNumber" v-slot="{ field, errors }">
               <v-text-field
-                name="cscClientNumber"
+                id="cscClientNumber"
                 v-bind="field"
                 label="Community Services Card Number"
+                variant="outlined"
                 required
                 minlength="9"
                 maxlength="9"
                 :counter="10"
                 :error-messages="errors"
+                :hide-details="true"
+                validateOnInput
               />
+              <v-alert
+                v-show="errors.length"
+                variant="plain"
+                border-color="surface"
+                density="compact"
+                icon="mdi-alert"
+                :text="errors[0]"
+                color="error"
+              ></v-alert>
             </Field>
           </v-col>
           <v-col cols="12">
             <Field name="cscDateOfBirth" v-slot="{ field, errors }">
               <Datepicker
                 id="cscDateOfBirth"
-                class="mb-2"
                 v-bind="field"
+                v-model="cscDateOfBirth"
                 auto-apply
                 :enable-time-picker="false"
                 required
                 validateOnInput
               />
-              <p v-show="errors.length" class="mb-3">
-                <v-icon>mdi-alert</v-icon>{{ errors[0] }}
-              </p>
+              <v-alert
+                v-show="errors.length"
+                variant="plain"
+                density="compact"
+                icon="mdi-alert"
+                :text="errors[0]"
+                color="error"
+              ></v-alert>
             </Field>
           </v-col>
           <v-col cols="12">
@@ -88,7 +93,7 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
               type="submit"
               variant="outlined"
               :disabled="!(meta.valid && meta.dirty)"
-              :class="!(meta.valid && meta.dirty) ? 'bg-warning' : 'bg-success'"
+              :class="!(meta.valid && meta.dirty) ? 'bg-error' : 'bg-success'"
             >
               <v-icon class="mr-2">mdi-check</v-icon>Submit
             </v-btn>
