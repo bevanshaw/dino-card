@@ -4,50 +4,33 @@ import { defineStore } from "pinia";
 export const useCommunityServicesCardStore = defineStore(
   "communityServicesCard",
   () => {
-    const hasCommunityServicesCard = ref("");
+    const isCommunityServicesCard = ref("");
+    const isCscValid = ref(false);
+    const cscClientNumber = ref("");
     const cscDateOfBirth = ref("");
 
-    return { hasCommunityServicesCard, cscDateOfBirth };
+    function getCscDateOfBirthFormatted() {
+      return formatDate(new Date(cscDateOfBirth.value));
+    }
+    function padTo2Digits(number: number) {
+      return number.toString().padStart(2, "0");
+    }
+
+    function formatDate(date: Date) {
+      return [
+        padTo2Digits(date.getDate()),
+        padTo2Digits(date.getMonth() + 1),
+        date.getFullYear(),
+      ].join("/");
+    }
+
+    return {
+      isCommunityServicesCard,
+      isCscValid,
+      cscClientNumber,
+      cscDateOfBirth,
+      getCscDateOfBirthFormatted,
+    };
   }
 );
 
-// import { defineStore } from 'pinia';
-// import axios from 'axios';
-
-// export const useCSCardStore = defineStore('', {
-//   state: () => ({
-//     cart: [],
-//     parts: null,
-//     foo: 'robots-foo',
-//   }),
-//   actions: {
-//     async updateParts(parts) {
-//       this.parts = parts;
-//     },
-//     async getParts() {
-//       try {
-//         axios
-//           .get('/api/parts')
-//           .then((result) => (this.updateParts(result.data)))
-//           .catch(console.error);
-//       } catch (error) {
-//         console.log('nothing back');
-//       }
-//     },
-//     async addRobotToCart(robot) {
-//       const cart = [...this.cart, robot];
-//       return axios.post('/api/cart', cart)
-//         .then(() => (this.cart.push(robot)));
-//     },
-//   },
-//   getters: {
-//     cartSaleItems() {
-//       return this.cart.filter((item) => item.head.onSale);
-//     },
-//     fooGetter() {
-//       return `robots-getter/${this.foo}`;
-//     },
-//   },
-// });
-
-// export default useRobotsStore;

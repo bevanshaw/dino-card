@@ -4,10 +4,13 @@ import CommunityServicesCardForm from "@/components/CommunityServicesCardForm.vu
 import DinoCardForm from "@/components/DinoCardForm.vue";
 import DinoCardRegisterForm from "@/components/DinoCardRegisterForm.vue";
 import { useCommunityServicesCardStore } from "@/stores/communityServicesCard";
+import { useDinoCardStore } from "@/stores/dinoCard";
 
 const cscStore = useCommunityServicesCardStore();
-const isCommunityServicesCard = "isCommunityServicesCard";
+const communityServicesCardHolder = "communityServicesCardHolder";
 
+const dinoCardStore = useDinoCardStore();
+const DinoCardHolder = "DinoCardHolder";
 </script>
 
 <template>
@@ -19,20 +22,29 @@ const isCommunityServicesCard = "isCommunityServicesCard";
     class="mb-8 pa-8"
     rounded="0"
   />
-  <CustomToggleCheck heading="Do you have a Community Services Card?" :modelValue="isCommunityServicesCard"/>
-  <CommunityServicesCardForm v-show="cscStore.hasCommunityServicesCard === 'true'" />
+  <CustomToggleCheck
+    heading="Do you have a Community Services Card?"
+    :modelValue="communityServicesCardHolder"
+  />
+  <CommunityServicesCardForm
+    v-show="cscStore.isCommunityServicesCard === 'true'"
+  />
   <v-card
-    v-show="cscStore.hasCommunityServicesCard === 'false'"
+    v-show="cscStore.isCommunityServicesCard === 'false'"
     title="You are not eligible for a Dino Card!"
     text="Dino Card is only available to community service cardholders."
     variant="tonal"
-    color="warning"
+    color="error"
     class="mb-8 pa-8"
     rounded="0"
   />
-  <CustomToggleCheck heading="Do you have an existing Dino Card?" />
-  <DinoCardForm />
-  <DinoCardRegisterForm />
+  <CustomToggleCheck
+    v-show="cscStore.isCscValid"
+    heading="Enter your Dino Card details:"
+    :modelValue="DinoCardHolder"
+  />
+  <DinoCardForm v-show="dinoCardStore.isDinoCard === 'true'" />
+  <DinoCardRegisterForm v-show="dinoCardStore.isDinoCard === 'false'" />
 </template>
 
 <style lang="scss" scoped></style>

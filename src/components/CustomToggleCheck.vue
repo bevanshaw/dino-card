@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { useCommunityServicesCardStore } from "@/stores/communityServicesCard";
+import { useDinoCardStore } from "@/stores/dinoCard";
 import { ref } from "vue";
 const props = defineProps({
   heading: {
@@ -13,16 +14,24 @@ const props = defineProps({
 const cscStore = useCommunityServicesCardStore();
 const activeButtonClass = ref("");
 
+const dinoCardStore = useDinoCardStore();
+
 const setToTrue = () => {
-  if (props.modelValue === "isCommunityServicesCard") {
-    cscStore.hasCommunityServicesCard = "true";
-    activeButtonClass.value = "true";
+  activeButtonClass.value = "true";
+  if (props.modelValue === "communityServicesCardHolder") {
+    cscStore.isCommunityServicesCard = "true";
+  }
+  if (props.modelValue === "DinoCardHolder") {
+    dinoCardStore.isDinoCard = "true";
   }
 };
 const setToFalse = () => {
-  if (props.modelValue === "isCommunityServicesCard") {
-    cscStore.hasCommunityServicesCard = "false";
-    activeButtonClass.value = "false";
+  activeButtonClass.value = "false";
+  if (props.modelValue === "communityServicesCardHolder") {
+    cscStore.isCommunityServicesCard = "false";
+  }
+  if (props.modelValue === "DinoCardHolder") {
+    dinoCardStore.isDinoCard = "false";
   }
 };
 </script>
@@ -42,7 +51,7 @@ const setToFalse = () => {
         @click="setToFalse()"
         elevation="2"
         :class="{
-          'bg-warning': activeButtonClass === 'false',
+          'bg-error': activeButtonClass === 'false',
         }"
         >No</v-btn
       >

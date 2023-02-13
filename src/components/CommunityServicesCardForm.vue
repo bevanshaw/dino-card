@@ -1,15 +1,12 @@
 <script setup lang="ts">
-import { ref } from "vue";
+import { computed, ref, type ComputedRef } from "vue";
 import Datepicker from "@vuepic/vue-datepicker";
 import "@vuepic/vue-datepicker/dist/main.css";
 import { Field, Form } from "vee-validate";
 import { string, object } from "yup";
 import { useCommunityServicesCardStore } from "@/stores/communityServicesCard";
 
-const communityServicesCardStore = useCommunityServicesCardStore();
-
-const cscDateOfBirth = ref("");
-
+const cscStore = useCommunityServicesCardStore();
 
 const cscValidationSchema = object().shape({
   cscClientNumber: string()
@@ -24,16 +21,30 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
   if (values === null || values === undefined) {
     return console.log("Please check all values have been entered correctly");
   }
+  cscStore.isCscValid = true;
 };
+
+const vCardTitle = computed((): string => {
+  return !cscStore.isCscValid
+    ? "Enter your Community Services Card details to confirm eligibility"
+    : "You entered these Community Services Card details";
+});
 </script>
 
 <template>
-  <v-card
-    class="mb-8 pa-8"
-    color="surface"
-    title="Enter your Community Services Card details to confirm eligibility"
-  >
+  <v-card class="mb-8 pa-8" color="surface" :title="vCardTitle">
+    <table v-show="cscStore.isCscValid" class="ml-4">
+      <tr>
+        <td>Services Card Number:</td>
+        <td>{{ cscStore.cscClientNumber }}</td>
+      </tr>
+      <tr>
+        <td>Date of Birth:</td>
+        <td>{{ cscStore.getCscDateOfBirthFormatted() }}</td>
+      </tr>
+    </table>
     <Form
+      v-show="!cscStore.isCscValid"
       :validation-schema="cscValidationSchema"
       @submit="validateCommunityServicesCard"
       v-slot="{ meta }"
@@ -47,11 +58,11 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
                 id="cscClientNumber"
                 v-bind="field"
                 label="Community Services Card Number"
+                v-model="cscStore.cscClientNumber"
                 variant="outlined"
                 required
                 minlength="9"
                 maxlength="9"
-                :counter="10"
                 :error-messages="errors"
                 :hide-details="true"
                 validateOnInput
@@ -59,7 +70,6 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
               <v-alert
                 v-show="errors.length"
                 variant="plain"
-                border-color="surface"
                 density="compact"
                 icon="mdi-alert"
                 :text="errors[0]"
@@ -72,11 +82,13 @@ const validateCommunityServicesCard = async (values: Record<string, any>) => {
               <Datepicker
                 id="cscDateOfBirth"
                 v-bind="field"
-                v-model="cscDateOfBirth"
+                placeholder="Date of Birth"
+                v-model="cscStore.cscDateOfBirth"
                 auto-apply
                 :enable-time-picker="false"
                 required
                 validateOnInput
+                month-name-format="long"
               />
               <v-alert
                 v-show="errors.length"
