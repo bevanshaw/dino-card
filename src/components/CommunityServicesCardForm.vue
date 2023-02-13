@@ -33,13 +33,13 @@ const vCardTitle = computed((): string => {
 
 <template>
   <v-card class="mb-8 pa-8" color="surface" :title="vCardTitle">
-    <table v-show="cscStore.isCscValid" class="ml-4">
+    <table v-show="cscStore.isCscValid" class="ml-4 pa-4 bg-success">
       <tr>
-        <td>Services Card Number:</td>
+        <td class="pr-4">Card Number:</td>
         <td>{{ cscStore.cscClientNumber }}</td>
       </tr>
       <tr>
-        <td>Date of Birth:</td>
+        <td class="pr-4">Date of Birth:</td>
         <td>{{ cscStore.getCscDateOfBirthFormatted() }}</td>
       </tr>
     </table>
